@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:loginsignup/home_page.dart';
 import 'forgot_password.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:loginsignup/config.dart';
+
 class MyLogin extends StatefulWidget {
   const MyLogin({super.key});
 
@@ -11,6 +15,52 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  Future<void> loginUser() async {
+  final email = emailController.text.trim();
+  final password = passwordController.text.trim();
+
+  if (email.isEmpty || password.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Please enter both email and password")),
+    );
+    return;
+  }
+
+  final url = Uri.parse('${Config.baseUrl}/auth/login');
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"email": email, "password": password}),
+    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200 && responseData['status'] == 'success') {
+      // ✅ Login successful
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login Successful!")),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else {
+      // ❌ Login failed
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(responseData['message'] ?? "Login failed")),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error: $e")),
+    );
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,27 +96,30 @@ class _MyLoginState extends State<MyLogin> {
                 child: Column(
                   children: [
                     TextField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white70,
-                        filled: true,
-                        hintText: 'Email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
+                    controller: emailController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white70,
+                    filled: true,
+                    hintText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(height: 30),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white70,
-                        filled: true,
-                        hintText: 'Password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
+                  ),
+                  ),
+                  SizedBox(height: 30),
+                  TextField(
+                  obscureText: true,
+                
+                  decoration: InputDecoration(
+                    fillColor: Colors.white70,
+                    filled: true,
+                    hintText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
+                  ),
+                  ),
+
                     SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,15 +136,10 @@ class _MyLoginState extends State<MyLogin> {
                           radius: 30,
                           backgroundColor: Color(0xff4c505b),
                           child: IconButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const HomePage(),
-                                ),
-                              );
-                            },
+                           onPressed: () {
+                                loginUser();
+                              },
+
                             icon: Icon(
                               Icons.arrow_forward,
                               color: Colors.white,
