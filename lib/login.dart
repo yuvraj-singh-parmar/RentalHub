@@ -43,48 +43,34 @@ Future<void> loginUser() async {
       body: jsonEncode({"email": email, "password": password}),
     );
 
-    // Debug logs — check the terminal / debug console
     print('LOGIN: statusCode=${response.statusCode}');
     print('LOGIN: rawBody=${response.body}');
 
-    // Try to parse JSON safely
-    Map<String, dynamic>? responseData;
-    try {
-      responseData = jsonDecode(response.body) as Map<String, dynamic>?;
-    } catch (e) {
-      responseData = null;
-      print('LOGIN: failed to parse JSON: $e');
-    }
-
-    // Primary checks
-    final backendStatus = responseData != null && responseData['status'] != null
-        ? responseData['status'].toString().toLowerCase()
-        : null;
-    final backendMessage = responseData != null && responseData['message'] != null
-        ? responseData['message'].toString()
-        : 'Unknown response from server';
-
-    // Only consider success if backend explicitly says 'success'
-    if (response.statusCode == 200 && backendStatus == 'success') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login Successful!")),
-      );
-      // navigate only after a tiny delay so user sees the SnackBar
-      Future.delayed(const Duration(milliseconds: 200), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      if (data['status'] == 'success') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Login Successful!")),
         );
-      });
+
+        // Navigate to home after small delay
+        Future.delayed(const Duration(milliseconds: 300), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'] ?? 'Login failed')),
+        );
+      }
     } else {
-      // Not successful — show backend message or generic
-      final msg = backendMessage.isNotEmpty ? backendMessage : 'Login failed';
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(msg)),
+        SnackBar(content: Text("Server error: ${response.statusCode}")),
       );
     }
   } catch (e) {
-    print('LOGIN: exception: $e');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Network error: $e")),
     );
@@ -92,6 +78,7 @@ Future<void> loginUser() async {
     setState(() => isLoading = false);
   }
 }
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 
-
 class MyRegister extends StatefulWidget {
   const MyRegister({super.key});
 
