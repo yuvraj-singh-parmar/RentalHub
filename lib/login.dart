@@ -15,13 +15,13 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
-  bool isLoading = false;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  Future<void> loginUser() async {
-    setState(() => isLoading = true);
+ // add at top of your _MyLoginState
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+bool isLoading = false;
 
-
+// replace your loginUser() with this
+Future<void> loginUser() async {
   final email = emailController.text.trim();
   final password = passwordController.text.trim();
 
@@ -29,9 +29,10 @@ class _MyLoginState extends State<MyLogin> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Please enter both email and password")),
     );
-    setState(() => isLoading = false);
     return;
   }
+
+  setState(() => isLoading = true);
 
   final url = Uri.parse('${Config.baseUrl}/auth/login');
 
@@ -42,28 +43,52 @@ class _MyLoginState extends State<MyLogin> {
       body: jsonEncode({"email": email, "password": password}),
     );
 
-    final responseData = jsonDecode(response.body);
+    // Debug logs — check the terminal / debug console
+    print('LOGIN: statusCode=${response.statusCode}');
+    print('LOGIN: rawBody=${response.body}');
 
-    if (response.statusCode == 200 && responseData['status'] == 'success') {
-      // ✅ Login successful
+    // Try to parse JSON safely
+    Map<String, dynamic>? responseData;
+    try {
+      responseData = jsonDecode(response.body) as Map<String, dynamic>?;
+    } catch (e) {
+      responseData = null;
+      print('LOGIN: failed to parse JSON: $e');
+    }
+
+    // Primary checks
+    final backendStatus = responseData != null && responseData['status'] != null
+        ? responseData['status'].toString().toLowerCase()
+        : null;
+    final backendMessage = responseData != null && responseData['message'] != null
+        ? responseData['message'].toString()
+        : 'Unknown response from server';
+
+    // Only consider success if backend explicitly says 'success'
+    if (response.statusCode == 200 && backendStatus == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Login Successful!")),
       );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      // navigate only after a tiny delay so user sees the SnackBar
+      Future.delayed(const Duration(milliseconds: 200), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      });
     } else {
-      // ❌ Login failed
+      // Not successful — show backend message or generic
+      final msg = backendMessage.isNotEmpty ? backendMessage : 'Login failed';
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['message'] ?? "Login failed")),
+        SnackBar(content: Text(msg)),
       );
     }
   } catch (e) {
+    print('LOGIN: exception: $e');
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Error: $e")),
+      SnackBar(content: Text("Network error: $e")),
     );
-  }finally {
+  } finally {
     setState(() => isLoading = false);
   }
 }
@@ -143,12 +168,20 @@ class _MyLoginState extends State<MyLogin> {
                         radius: 30,
                         backgroundColor: const Color(0xff4c505b),
                         child: isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  color: Colors.white,
+                                ),
+                              )
                             : IconButton(
                                 onPressed: loginUser,
                                 icon: const Icon(Icons.arrow_forward, color: Colors.white),
                               ),
-                      ),
+                          ),
+
                       ],
                     ),
                     SizedBox(height: 40),
