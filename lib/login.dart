@@ -15,9 +15,13 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  bool isLoading = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   Future<void> loginUser() async {
+    setState(() => isLoading = true);
+
+
   final email = emailController.text.trim();
   final password = passwordController.text.trim();
 
@@ -25,6 +29,7 @@ class _MyLoginState extends State<MyLogin> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Please enter both email and password")),
     );
+    setState(() => isLoading = false);
     return;
   }
 
@@ -58,6 +63,8 @@ class _MyLoginState extends State<MyLogin> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Error: $e")),
     );
+  }finally {
+    setState(() => isLoading = false);
   }
 }
 
@@ -108,8 +115,8 @@ class _MyLoginState extends State<MyLogin> {
                   ),
                   SizedBox(height: 30),
                   TextField(
+                  controller: passwordController,
                   obscureText: true,
-                
                   decoration: InputDecoration(
                     fillColor: Colors.white70,
                     filled: true,
@@ -132,20 +139,16 @@ class _MyLoginState extends State<MyLogin> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Color(0xff4c505b),
-                          child: IconButton(
-                           onPressed: () {
-                                loginUser();
-                              },
-
-                            icon: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                       CircleAvatar(
+                        radius: 30,
+                        backgroundColor: const Color(0xff4c505b),
+                        child: isLoading
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : IconButton(
+                                onPressed: loginUser,
+                                icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                              ),
+                      ),
                       ],
                     ),
                     SizedBox(height: 40),
