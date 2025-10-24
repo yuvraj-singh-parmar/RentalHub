@@ -338,7 +338,7 @@ class _MyLoginState extends State<MyLogin> {
             Container(
               padding: const EdgeInsets.only(left: 35, top: 130),
               child: const Text(
-                'Welcome\nBack',
+                'Welcome Vaibhav',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 33,
