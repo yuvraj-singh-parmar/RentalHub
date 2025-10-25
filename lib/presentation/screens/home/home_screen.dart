@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:loginsignup/property.dart';
-
-// Placeholder screens
-import 'profile.dart';
-import 'electronic.dart';
-import 'furniture.dart';
+import 'package:loginsignup/presentation/screens/categories/electronics_screen.dart';
+import 'package:loginsignup/presentation/screens/categories/furniture_screen.dart';
+import 'package:loginsignup/presentation/screens/categories/property_screen.dart';
+import 'package:loginsignup/presentation/screens/profile/profile_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,7 +19,6 @@ class _HomePageState extends State<HomePage> {
     {"icon": Icons.electrical_services, "title": "Electronics"},
     {"icon": Icons.chair, "title": "Furniture"},
     {"icon": Icons.home, "title": "Flats"},
-    // Add more categories later if needed
   ];
 
   // Sample products
@@ -159,12 +156,16 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.home_repair_service_outlined, color: Colors.brown),
+              leading: const Icon(
+                Icons.home_repair_service_outlined,
+                color: Colors.brown,
+              ),
               title: const Text("Property"),
               onTap: () {
                 Navigator.push(
                   context,
-                   MaterialPageRoute(builder: (_) => const MyProperty()),);
+                  MaterialPageRoute(builder: (_) => const MyProperty()),
+                );
               },
             ),
             ListTile(
@@ -182,7 +183,6 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.settings, color: Colors.brown),
               title: const Text("Settings"),
-              // Add Settings navigation later
             ),
           ],
         ),
@@ -251,7 +251,6 @@ class _HomePageState extends State<HomePage> {
                 elevation: 4,
               ),
               onPressed: () {
-                // Navigate to respective screen
                 if (cat['title'] == "Electronics") {
                   Navigator.push(
                     context,

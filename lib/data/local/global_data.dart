@@ -3,7 +3,7 @@ import 'dart:io';
 
 /// This file acts as the global storage for all uploaded or added items.
 /// Any screen (like Electronics, Furniture, Flats, or Upload Property)
-/// can add new items using: 
+/// can add new items using:
 ///   GlobalData.addItem({...});
 ///
 /// The UploadedItemsScreen automatically reflects updates in real time.
@@ -51,7 +51,9 @@ void preloadDummyData() {
         'title': 'Modern Flat - 2BHK',
         'price': '15000',
         'location': 'Indore',
-        'image': File('assets/furniture/chairs.jpg'), // replace with actual assets
+        'image': File(
+          'assets/furniture/chairs.jpg',
+        ), // replace with actual assets
         'category': 'Flats',
       },
       {

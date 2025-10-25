@@ -2,57 +2,57 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class MyElectronics extends StatefulWidget {
-  const MyElectronics({super.key});
+class MyFurniture extends StatefulWidget {
+  const MyFurniture({super.key});
 
   @override
-  State<MyElectronics> createState() => _MyElectronicsState();
+  State<MyFurniture> createState() => _MyFurnitureState();
 }
 
-class _MyElectronicsState extends State<MyElectronics> {
+class _MyFurnitureState extends State<MyFurniture> {
   final List<Map<String, dynamic>> products = [
     {
-      "image": "assets/electronics/cameraHD.png",
-      "title": "Nikon Camera for HD Graphics",
-      "price": 650,
-      "oldPrice": 780,
+      "image": "assets/furniture/almirah.jpg",
+      "title": "Almirah for your Bedroom",
+      "price": 1250,
+      "oldPrice": 1680,
       "discount": "41% off",
       "rating": 4.2,
       "reviews": 6331,
-      "delivery": "Free Delivery",
+      "delivery": "₹350 Delivery",
       "userUploaded": false,
     },
     {
-      "image": "assets/electronics/headphone.png",
-      "title": "Boat Headphones for endless Listening",
+      "image": "assets/furniture/chairs2.jpg",
+      "title": "Comfortable Chair",
       "price": 400,
       "oldPrice": 499,
       "discount": "21% off",
       "rating": 4.0,
       "reviews": 3175,
-      "delivery": "Delivery ₹44",
+      "delivery": "Delivery ₹140",
       "userUploaded": false,
     },
     {
-      "image": "assets/electronics/mic.png",
-      "title": "Mic for Recordings",
-      "price": 300,
-      "oldPrice": 350,
+      "image": "assets/furniture/chairs.jpg",
+      "title": "Wooden Chairs Set of 2",
+      "price": 700,
+      "oldPrice": 900,
       "discount": "18% off",
       "rating": 4.4,
       "reviews": 599,
-      "delivery": "Free Delivery",
+      "delivery": "Delivery ₹160",
       "userUploaded": false,
     },
     {
-      "image": "assets/electronics/DronePic.png",
-      "title": "Drone camera for photography",
+      "image": "assets/furniture/almirah.jpg",
+      "title": "Almirah for Clothes",
       "price": 900,
       "oldPrice": 1130,
       "discount": "18% off",
       "rating": 4.1,
       "reviews": 2968,
-      "delivery": "Free Delivery",
+      "delivery": "Delivery ₹240",
       "userUploaded": false,
     },
   ];
@@ -79,14 +79,16 @@ class _MyElectronicsState extends State<MyElectronics> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (context) {
         return Padding(
           padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-              left: 16,
-              right: 16,
-              top: 20),
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+            left: 16,
+            right: 16,
+            top: 20,
+          ),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -128,41 +130,51 @@ class _MyElectronicsState extends State<MyElectronics> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton.icon(
-                        onPressed: () => _pickImage(ImageSource.camera),
-                        icon: const Icon(Icons.camera_alt),
-                        label: const Text("Camera")),
+                      onPressed: () => _pickImage(ImageSource.camera),
+                      icon: const Icon(Icons.camera_alt),
+                      label: const Text("Camera"),
+                    ),
                     const SizedBox(width: 10),
                     ElevatedButton.icon(
-                        onPressed: () => _pickImage(ImageSource.gallery),
-                        icon: const Icon(Icons.photo),
-                        label: const Text("Gallery")),
+                      onPressed: () => _pickImage(ImageSource.gallery),
+                      icon: const Icon(Icons.photo),
+                      label: const Text("Gallery"),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: titleController,
                   decoration: const InputDecoration(
-                      labelText: "Item Title", border: OutlineInputBorder()),
+                    labelText: "Item Title",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: "New Price", border: OutlineInputBorder()),
+                    labelText: "New Price",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: oldPriceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: "Old Price", border: OutlineInputBorder()),
+                    labelText: "Old Price",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: deliveryController,
                   decoration: const InputDecoration(
-                      labelText: "Delivery Info", border: OutlineInputBorder()),
+                    labelText: "Delivery Info",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -170,9 +182,13 @@ class _MyElectronicsState extends State<MyElectronics> {
                     if (titleController.text.isEmpty ||
                         priceController.text.isEmpty ||
                         _selectedImage == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
                           content: Text(
-                              "Please fill all fields and select an image")));
+                            "Please fill all fields and select an image",
+                          ),
+                        ),
+                      );
                       return;
                     }
 
@@ -194,9 +210,11 @@ class _MyElectronicsState extends State<MyElectronics> {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12))),
+                    backgroundColor: Colors.purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: const Text("Add Item"),
                 ),
                 const SizedBox(height: 20),
@@ -209,7 +227,10 @@ class _MyElectronicsState extends State<MyElectronics> {
   }
 
   Widget _buildProductCard(
-      Map<String, dynamic> product, int index, double imageHeight) {
+    Map<String, dynamic> product,
+    int index,
+    double imageHeight,
+  ) {
     final imagePath = product["image"];
     final String? discount = product["discount"];
     final bool isNew = discount == "New";
@@ -217,14 +238,17 @@ class _MyElectronicsState extends State<MyElectronics> {
     return Stack(
       children: [
         Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
           elevation: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(15)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(15),
+                ),
                 child: SizedBox(
                   height: imageHeight,
                   width: double.infinity,
@@ -247,23 +271,30 @@ class _MyElectronicsState extends State<MyElectronics> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Text("₹${product["price"]}",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14)),
+                        Text(
+                          "₹${product["price"]}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
                         const SizedBox(width: 5),
                         if (product["oldPrice"] > 0)
-                          Text("₹${product["oldPrice"]}",
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
-                              )),
+                          Text(
+                            "₹${product["oldPrice"]}",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(product["delivery"],
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.grey)),
+                    Text(
+                      product["delivery"],
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
                   ],
                 ),
               ),
@@ -313,13 +344,14 @@ class _MyElectronicsState extends State<MyElectronics> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    int crossAxisCount = screenWidth > 600 ? 3 : 2;
-    double cardWidth = (screenWidth - (crossAxisCount + 1) * 12) / crossAxisCount;
-    double imageHeight = cardWidth * 0.7;
+    int crossAxisCount = screenWidth > 600 ? 3 : 2; // 3 columns on tablet
+    double cardWidth =
+        (screenWidth - (crossAxisCount + 1) * 12) / crossAxisCount;
+    double imageHeight = cardWidth * 0.7; // Image aspect ratio
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("✨ Choose Your Electronics"),
+        title: const Text("✨ Choose Your Furniture"),
         backgroundColor: Colors.purple,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

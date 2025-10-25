@@ -10,7 +10,6 @@ class MyProperty extends StatefulWidget {
 }
 
 class _MyPropertyState extends State<MyProperty> {
-  // Static list to share user-uploaded items
   static List<Map<String, dynamic>> properties = [
     {
       "image": "assets/furniture/sofa.png",
@@ -58,14 +57,16 @@ class _MyPropertyState extends State<MyProperty> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (context) {
         return Padding(
           padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-              left: 16,
-              right: 16,
-              top: 20),
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+            left: 16,
+            right: 16,
+            top: 20,
+          ),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -107,41 +108,51 @@ class _MyPropertyState extends State<MyProperty> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton.icon(
-                        onPressed: () => _pickImage(ImageSource.camera),
-                        icon: const Icon(Icons.camera_alt),
-                        label: const Text("Camera")),
+                      onPressed: () => _pickImage(ImageSource.camera),
+                      icon: const Icon(Icons.camera_alt),
+                      label: const Text("Camera"),
+                    ),
                     const SizedBox(width: 10),
                     ElevatedButton.icon(
-                        onPressed: () => _pickImage(ImageSource.gallery),
-                        icon: const Icon(Icons.photo),
-                        label: const Text("Gallery")),
+                      onPressed: () => _pickImage(ImageSource.gallery),
+                      icon: const Icon(Icons.photo),
+                      label: const Text("Gallery"),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: titleController,
                   decoration: const InputDecoration(
-                      labelText: "Property Title", border: OutlineInputBorder()),
+                    labelText: "Property Title",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: "New Price", border: OutlineInputBorder()),
+                    labelText: "New Price",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: oldPriceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: "Old Price", border: OutlineInputBorder()),
+                    labelText: "Old Price",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: deliveryController,
                   decoration: const InputDecoration(
-                      labelText: "Delivery Info", border: OutlineInputBorder()),
+                    labelText: "Delivery Info",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -149,9 +160,13 @@ class _MyPropertyState extends State<MyProperty> {
                     if (titleController.text.isEmpty ||
                         priceController.text.isEmpty ||
                         _selectedImage == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
                           content: Text(
-                              "Please fill all fields and select an image")));
+                            "Please fill all fields and select an image",
+                          ),
+                        ),
+                      );
                       return;
                     }
 
@@ -173,9 +188,11 @@ class _MyPropertyState extends State<MyProperty> {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12))),
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: const Text("Add Property"),
                 ),
                 const SizedBox(height: 20),
@@ -187,7 +204,11 @@ class _MyPropertyState extends State<MyProperty> {
     );
   }
 
-  Widget _buildPropertyCard(Map<String, dynamic> property, int index, double imageHeight) {
+  Widget _buildPropertyCard(
+    Map<String, dynamic> property,
+    int index,
+    double imageHeight,
+  ) {
     final imagePath = property["image"];
     final String? discount = property["discount"];
     final bool isNew = discount == "New";
@@ -195,14 +216,17 @@ class _MyPropertyState extends State<MyProperty> {
     return Stack(
       children: [
         Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
           elevation: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(15)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(15),
+                ),
                 child: SizedBox(
                   height: imageHeight,
                   width: double.infinity,
@@ -225,23 +249,30 @@ class _MyPropertyState extends State<MyProperty> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Text("₹${property["price"]}",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14)),
+                        Text(
+                          "₹${property["price"]}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
                         const SizedBox(width: 5),
                         if (property["oldPrice"] > 0)
-                          Text("₹${property["oldPrice"]}",
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
-                              )),
+                          Text(
+                            "₹${property["oldPrice"]}",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(property["delivery"],
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.grey)),
+                    Text(
+                      property["delivery"],
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
                   ],
                 ),
               ),
@@ -292,7 +323,8 @@ class _MyPropertyState extends State<MyProperty> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     int crossAxisCount = screenWidth > 600 ? 3 : 2;
-    double cardWidth = (screenWidth - (crossAxisCount + 1) * 12) / crossAxisCount;
+    double cardWidth =
+        (screenWidth - (crossAxisCount + 1) * 12) / crossAxisCount;
     double imageHeight = cardWidth * 0.7;
 
     return Scaffold(

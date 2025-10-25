@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'package:loginsignup/presentation/screens/home/home_screen.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({super.key});
@@ -14,7 +14,7 @@ class _MyRegisterState extends State<MyRegister> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/register.png'),
           fit: BoxFit.cover,
@@ -27,8 +27,8 @@ class _MyRegisterState extends State<MyRegister> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 35, top: 30),
-              child: Text(
+              padding: const EdgeInsets.only(left: 35, top: 30),
+              child: const Text(
                 'Create\nAccount',
                 style: TextStyle(
                   color: Colors.white,
@@ -50,61 +50,61 @@ class _MyRegisterState extends State<MyRegister> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: 'Name',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     TextField(
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Sign In',
                           style: TextStyle(
                             color: Colors.white,
@@ -114,16 +114,18 @@ class _MyRegisterState extends State<MyRegister> {
                         ),
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: Color(0xff4c505b),
+                          backgroundColor: const Color(0xff4c505b),
                           child: IconButton(
                             onPressed: () {
-                          Navigator.pushReplacement(
-                             context,
-                           MaterialPageRoute(builder: (context) => const HomePage()),
-                            );
-                          },
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomePage(),
+                                ),
+                              );
+                            },
 
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_forward,
                               color: Colors.white,
                             ),
@@ -131,7 +133,7 @@ class _MyRegisterState extends State<MyRegister> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -140,7 +142,7 @@ class _MyRegisterState extends State<MyRegister> {
                             Navigator.pushNamed(context, 'login');
                           },
 
-                          child: Text(
+                          child: const Text(
                             'Sign In',
                             style: TextStyle(
                               decoration: TextDecoration.underline,

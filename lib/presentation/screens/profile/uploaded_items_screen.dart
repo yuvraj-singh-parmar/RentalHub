@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'global_data.dart'; // Global storage for uploaded items
+import 'package:loginsignup/data/local/global_data.dart';
 
 class UploadedItemsScreen extends StatefulWidget {
   const UploadedItemsScreen({super.key});
@@ -11,12 +12,16 @@ class UploadedItemsScreen extends StatefulWidget {
 class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
   @override
   Widget build(BuildContext context) {
-    final items = GlobalData.allUploadedItems; // Get all uploaded items globally
+    final items =
+        GlobalData.allUploadedItems; // Get all uploaded items globally
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: const Text("Your Uploaded Items", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Your Uploaded Items",
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 4,
       ),
@@ -32,7 +37,9 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
               padding: const EdgeInsets.all(12.0),
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: MediaQuery.of(context).size.width < 600 ? 2 : 4,
+                  crossAxisCount: MediaQuery.of(context).size.width < 600
+                      ? 2
+                      : 4,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                   childAspectRatio: 0.8,
@@ -66,7 +73,11 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: const [
-              BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(2, 2)),
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6,
+                offset: Offset(2, 2),
+              ),
             ],
           ),
           child: Column(
@@ -74,9 +85,13 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
             children: [
               Expanded(
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
                   child: Image.file(
-                    item['image'],
+                    item['image'] is File
+                        ? item['image'] as File
+                        : File(item['image'].toString()),
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) => Container(
@@ -90,7 +105,10 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   item['title'] ?? 'Untitled',
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -99,19 +117,29 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   "Rent: ₹${item['price'] ?? 'N/A'}",
-                  style: const TextStyle(color: Colors.brown, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    color: Colors.brown,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [
-                    const Icon(Icons.location_on, color: Colors.brown, size: 16),
+                    const Icon(
+                      Icons.location_on,
+                      color: Colors.brown,
+                      size: 16,
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         item['location'] ?? 'Indore',
-                        style: const TextStyle(fontSize: 13, color: Colors.black54),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black54,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -130,7 +158,9 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
       context: context,
       builder: (context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -142,16 +172,26 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.file(item['image'], fit: BoxFit.cover),
+                  child: Image.file(
+                    item['image'] is File
+                        ? item['image'] as File
+                        : File(item['image'].toString()),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   item['title'] ?? 'Untitled Property',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 6),
-                Text("Rent: ₹${item['price'] ?? 'N/A'}",
-                    style: const TextStyle(fontSize: 16, color: Colors.brown)),
+                Text(
+                  "Rent: ₹${item['price'] ?? 'N/A'}",
+                  style: const TextStyle(fontSize: 16, color: Colors.brown),
+                ),
                 const SizedBox(height: 6),
                 Text(
                   "Location: ${item['location'] ?? 'Indore'}",
@@ -165,7 +205,9 @@ class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.brown,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
               ],

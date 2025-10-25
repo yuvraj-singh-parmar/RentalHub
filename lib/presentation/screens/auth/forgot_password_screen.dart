@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loginsignup/login.dart';
+import 'package:loginsignup/presentation/screens/auth/login_screen.dart';
 
 class MyForgotPassword extends StatefulWidget {
   const MyForgotPassword({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyForgotState createState() => _MyForgotState();
 }
 
@@ -13,7 +12,7 @@ class _MyForgotState extends State<MyForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/forgot_pass.png'),
           fit: BoxFit.cover,
@@ -27,8 +26,8 @@ class _MyForgotState extends State<MyForgotPassword> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 35, top: 30),
-              child: Text(
+              padding: const EdgeInsets.only(left: 35, top: 30),
+              child: const Text(
                 'Forgot\nPassword',
                 style: TextStyle(
                   color: Colors.white,
@@ -50,55 +49,42 @@ class _MyForgotState extends State<MyForgotPassword> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    //SizedBox(height: 30),
-                    // TextField(
-                    //   decoration: InputDecoration(
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //       borderSide: BorderSide(color: Colors.black),
-                    //     ),
-                    //     enabledBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //       borderSide: BorderSide(color: Colors.white),
-                    //     ),
-                    //   ),
-                    // ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     TextField(
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: "Enter OTP",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           ' Submit ',
                           style: TextStyle(
                             color: Colors.white,
@@ -108,14 +94,20 @@ class _MyForgotState extends State<MyForgotPassword> {
                         ),
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: Color(0xff4c505b),
+                          backgroundColor: const Color(0xff4c505b),
                           child: IconButton(
                             onPressed: () {
                               Navigator.pushReplacement(
-                                context, 
-                                MaterialPageRoute(builder: (context)=> const MyLogin() ),);
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MyLogin(),
+                                ),
+                              );
                             },
-                            icon: Icon(Icons.arrow_forward, color: Colors.white,),
+                            icon: const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:loginsignup/login.dart';
+import 'package:loginsignup/presentation/screens/auth/login_screen.dart';
 import 'uploaded_items_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -37,8 +37,9 @@ class _ProfilePageState extends State<ProfilePage> {
     TextEditingController nameController = TextEditingController(text: name);
     TextEditingController emailController = TextEditingController(text: email);
     TextEditingController phoneController = TextEditingController(text: phone);
-    TextEditingController addressController =
-        TextEditingController(text: address);
+    TextEditingController addressController = TextEditingController(
+      text: address,
+    );
 
     showDialog(
       context: context,
@@ -48,22 +49,29 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(labelText: "Name")),
+                controller: nameController,
+                decoration: const InputDecoration(labelText: "Name"),
+              ),
               TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(labelText: "Email")),
+                controller: emailController,
+                decoration: const InputDecoration(labelText: "Email"),
+              ),
               TextField(
-                  controller: phoneController,
-                  decoration: const InputDecoration(labelText: "Phone")),
+                controller: phoneController,
+                decoration: const InputDecoration(labelText: "Phone"),
+              ),
               TextField(
-                  controller: addressController,
-                  decoration: const InputDecoration(labelText: "Address")),
+                controller: addressController,
+                decoration: const InputDecoration(labelText: "Address"),
+              ),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           ElevatedButton(
             onPressed: () {
               setState(() {
@@ -88,10 +96,16 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Logout"),
         content: const Text("Are you sure you want to logout?"),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushReplacement(context , MaterialPageRoute(builder: (context) => MyLogin()));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const MyLogin()),
+              );
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Logged out successfully!")),
               );
@@ -122,12 +136,19 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Password reset link sent to ${emailController.text}")),
+                SnackBar(
+                  content: Text(
+                    "Password reset link sent to ${emailController.text}",
+                  ),
+                ),
               );
             },
             child: const Text("Send Link"),
@@ -144,10 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Profile"),
         backgroundColor: Colors.blueAccent,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: _editProfile,
-          )
+          IconButton(icon: const Icon(Icons.edit), onPressed: _editProfile),
         ],
       ),
       body: SingleChildScrollView(
@@ -180,20 +198,44 @@ class _ProfilePageState extends State<ProfilePage> {
 
             // Profile Details
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              child: ListTile(leading: const Icon(Icons.person), title: Text(name), subtitle: const Text("Full Name")),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.person),
+                title: Text(name),
+                subtitle: const Text("Full Name"),
+              ),
             ),
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              child: ListTile(leading: const Icon(Icons.email), title: Text(email), subtitle: const Text("Email Address")),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.email),
+                title: Text(email),
+                subtitle: const Text("Email Address"),
+              ),
             ),
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              child: ListTile(leading: const Icon(Icons.phone), title: Text(phone), subtitle: const Text("Mobile Number")),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.phone),
+                title: Text(phone),
+                subtitle: const Text("Mobile Number"),
+              ),
             ),
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              child: ListTile(leading: const Icon(Icons.home), title: Text(address), subtitle: const Text("Address")),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.home),
+                title: Text(address),
+                subtitle: const Text("Address"),
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -204,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UploadedItemsScreen(),
+                    builder: (context) => const UploadedItemsScreen(),
                   ),
                 );
               },
@@ -230,7 +272,10 @@ class _ProfilePageState extends State<ProfilePage> {
               label: const Text("Forgot Password"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orangeAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 12,
+                ),
               ),
             ),
 
@@ -243,7 +288,10 @@ class _ProfilePageState extends State<ProfilePage> {
               label: const Text("Logout"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 12,
+                ),
               ),
             ),
           ],
