@@ -225,7 +225,7 @@ class _MyElectronicsState extends State<MyElectronics> {
               ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(15)),
-                child: Container(
+                child: SizedBox(
                   height: imageHeight,
                   width: double.infinity,
                   child: imagePath.startsWith("assets/")

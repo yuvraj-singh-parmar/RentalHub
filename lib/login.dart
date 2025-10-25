@@ -79,7 +79,6 @@
 //   }
 // }
 
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
@@ -298,9 +297,9 @@ class _MyLoginState extends State<MyLogin> {
           responseData['message']?.toString() ?? 'Unknown error';
 
       if (response.statusCode == 200 && backendStatus == 'success') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Login Successful!")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Login Successful!")));
         Future.delayed(const Duration(milliseconds: 200), () {
           Navigator.pushReplacement(
             context,
@@ -308,15 +307,15 @@ class _MyLoginState extends State<MyLogin> {
           );
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(backendMessage)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(backendMessage)));
       }
     } catch (e) {
       print('LOGIN: exception: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Network error: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Network error: $e")));
     } finally {
       setState(() => isLoading = false);
     }
@@ -338,9 +337,9 @@ class _MyLoginState extends State<MyLogin> {
             Container(
               padding: const EdgeInsets.only(left: 35, top: 130),
               child: const Text(
-                'Welcome Vaibhav',
+                'Welcome Back',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 33,
                   fontWeight: FontWeight.bold,
                 ),
@@ -468,7 +467,9 @@ class _MyLoginState extends State<MyLogin> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 15),
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
                       ),
                       child: const Text(
                         "Check",

@@ -1,8 +1,12 @@
-class Config {
-  // Base URL for development environment
-  static const String baseUrl = 'https://renthub-4.onrender.com'; // Change this to your backend URL
+import 'package:flutter/foundation.dart';
 
-  // You can add other environment URLs if needed
-  // static const String stagingBaseUrl = 'https://staging-api.example.com';
-  // static const String productionBaseUrl = 'https://api.example.com';
+class Config {
+  // Defaults (safe fallbacks)
+  static const String _devBaseUrl = 'http://localhost:8080';
+  static const String _prodBaseUrl = 'https://renthub-4.onrender.com';
+
+  // Computed base URL
+  static String get baseUrl {
+    return kReleaseMode ? _prodBaseUrl : _devBaseUrl;
+  }
 }
