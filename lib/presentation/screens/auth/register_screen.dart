@@ -185,43 +185,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
 
   Future<void> _registerUser() async {
-    if (!_formKey.currentState!.validate()) return;
+  if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _isLoading = true);
+  setState(() => _isLoading = true);
 
-    final url = Uri.parse('https://renthub-4.onrender.com/auth/register');
-    final body = jsonEncode({
-      'name': _nameController.text.trim(),
-      'email': _emailController.text.trim(),
-      'password': _passwordController.text.trim(),
-    });
+  final url = Uri.parse('https://renthub-4.onrender.com/auth/register');
+  final body = jsonEncode({
+    'username': _nameController.text.trim(),
+    'email': _emailController.text.trim(),
+    'password': _passwordController.text.trim(),
+  });
 
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: body,
-      );
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Registration successful!')),
-        );
-        Navigator.pushReplacementNamed(context, '/login');
-      } else {
-        final resBody = jsonDecode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(resBody['message'] ?? 'Registration failed')),
-        );
-      }
-    } catch (e) {
+    final resBody = jsonDecode(response.body);
+
+    if (response.statusCode == 200 && resBody['status'] == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(content: Text(resBody['message'])),
       );
-    } finally {
-      setState(() => _isLoading = false);
+      Navigator.pushReplacementNamed(context, '/login');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(resBody['message'] ?? 'Registration failed')),
+      );
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error: $e')),
+    );
+  } finally {
+    setState(() => _isLoading = false);
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
