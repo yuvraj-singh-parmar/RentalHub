@@ -8,9 +8,9 @@ void main() {
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       routes: {
-        'login': (context) => MyLogin(),
-        'register': (context) => MyRegister(),
-      },
+  '/register': (context) => const RegisterScreen(),
+  '/login': (context) => const LoginScreen(),
+  },
     ),
   );
 }
