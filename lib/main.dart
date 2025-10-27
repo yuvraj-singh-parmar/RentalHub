@@ -9,7 +9,7 @@ void main() {
       initialRoute: 'login',
       routes: {
   '/register': (context) => const RegisterScreen(),
-  '/login': (context) => const LoginScreen(),
+  '/login': (context) => const MyLogin(),
   },
     ),
   );
