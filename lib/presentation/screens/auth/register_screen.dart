@@ -170,7 +170,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -185,45 +185,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
 
   Future<void> _registerUser() async {
-  if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
 
-  setState(() => _isLoading = true);
+    setState(() => _isLoading = true);
 
-  final url = Uri.parse('https://renthub-4.onrender.com/auth/register');
-  final body = jsonEncode({
-    'username': _nameController.text.trim(),
-    'email': _emailController.text.trim(),
-    'password': _passwordController.text.trim(),
-  });
+    final url = Uri.parse('https://renthub-4.onrender.com/auth/register');
+    final body = jsonEncode({
+      'username': _nameController.text.trim(),
+      'email': _emailController.text.trim(),
+      'password': _passwordController.text.trim(),
+    });
 
-  try {
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: body,
-    );
-
-    final resBody = jsonDecode(response.body);
-
-    if (response.statusCode == 200 && resBody['status'] == 'success') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(resBody['message'])),
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
       );
-      Navigator.pushReplacementNamed(context, '/login');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(resBody['message'] ?? 'Registration failed')),
-      );
+
+      final resBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && resBody['status'] == 'success') {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(resBody['message'])));
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(resBody['message'] ?? 'Registration failed')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    } finally {
+      setState(() => _isLoading = false);
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: $e')),
-    );
-  } finally {
-    setState(() => _isLoading = false);
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -256,8 +255,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.person),
                     ),
-                    validator: (value) =>
-                        value == null || value.isEmpty ? 'Enter your name' : null,
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'Enter your name'
+                        : null,
                   ),
                   const SizedBox(height: 20),
 
@@ -287,7 +287,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       prefixIcon: Icon(Icons.lock),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Enter password';
+                      if (value == null || value.isEmpty)
+                        return 'Enter password';
                       if (value.length < 6) return 'Password too short';
                       return null;
                     },
@@ -336,4 +337,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-

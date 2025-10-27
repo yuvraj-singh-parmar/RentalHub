@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:loginsignup/presentation/screens/auth/login_screen.dart';
-import 'package:loginsignup/presentation/screens/auth/register_screen.dart';
+
+import 'presentation/screens/auth/login_screen.dart';
+import 'presentation/screens/auth/register_screen.dart';
 
 void main() {
   runApp(
@@ -8,9 +9,9 @@ void main() {
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       routes: {
-  '/register': (context) => const RegisterScreen(),
-  '/login': (context) => const LoginScreen(),
-  },
+        '/register': (context) => const RegisterScreen(),
+        '/login': (context) => const MyLogin(),
+      },
     ),
   );
 }
