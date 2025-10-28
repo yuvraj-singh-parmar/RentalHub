@@ -344,10 +344,10 @@ class _MyFurnitureState extends State<MyFurniture> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    int crossAxisCount = screenWidth > 600 ? 3 : 2; // 3 columns on tablet
+    int crossAxisCount = screenWidth > 600 ? 3 : 2;
     double cardWidth =
         (screenWidth - (crossAxisCount + 1) * 12) / crossAxisCount;
-    double imageHeight = cardWidth * 0.7; // Image aspect ratio
+    double imageHeight = cardWidth * 0.7;
 
     return Scaffold(
       appBar: AppBar(
