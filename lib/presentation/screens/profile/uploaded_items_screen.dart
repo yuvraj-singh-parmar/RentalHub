@@ -12,8 +12,7 @@ class UploadedItemsScreen extends StatefulWidget {
 class _UploadedItemsScreenState extends State<UploadedItemsScreen> {
   @override
   Widget build(BuildContext context) {
-    final items =
-        GlobalData.allUploadedItems; // Get all uploaded items globally
+    final items = GlobalData.allUploadedItems;
 
     return Scaffold(
       appBar: AppBar(

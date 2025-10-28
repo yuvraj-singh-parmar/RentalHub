@@ -14,14 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Sample categories
   final List<Map<String, dynamic>> categories = [
     {"icon": Icons.electrical_services, "title": "Electronics"},
     {"icon": Icons.chair, "title": "Furniture"},
     {"icon": Icons.home, "title": "Flats"},
   ];
 
-  // Sample products
   final List<Map<String, String>> featuredProducts = [
     {
       "image": "assets/electronics/cameraHD.png",
@@ -191,9 +189,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBanner(double screenWidth) {
-    final double bannerHeight = screenWidth < 600
-        ? 150
-        : 250; // Adaptive height
+    final double bannerHeight = screenWidth < 600 ? 150 : 250;
     return SizedBox(
       height: bannerHeight,
       child: PageView(
@@ -229,7 +225,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Clickable Category Buttons
   Widget _buildCategoryList() {
     return SizedBox(
       height: 100,
@@ -300,7 +295,7 @@ class _HomePageState extends State<HomePage> {
     List<Map<String, String>> products,
     double screenWidth,
   ) {
-    final double cardWidth = screenWidth < 600 ? 140 : 200; // Adaptive width
+    final double cardWidth = screenWidth < 600 ? 140 : 200;
     return SizedBox(
       height: cardWidth + 80,
       child: ListView.builder(

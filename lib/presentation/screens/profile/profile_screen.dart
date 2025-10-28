@@ -5,8 +5,8 @@ import 'package:loginsignup/presentation/screens/auth/login_screen.dart';
 import 'uploaded_items_screen.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String role; // "user" or "owner"
-  final String userId; // Logged-in user ID
+  final String role;
+  final String userId;
 
   const ProfilePage({super.key, required this.role, required this.userId});
 
@@ -18,7 +18,6 @@ class _ProfilePageState extends State<ProfilePage> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
 
-  // Profile Data
   String name = "Yuvraj Singh Parmar";
   String email = "yuvraj@example.com";
   String phone = "+91 9876543210";
@@ -172,7 +171,6 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Profile Picture
             Center(
               child: Stack(
                 children: [
@@ -196,7 +194,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 20),
 
-            // Profile Details
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -240,7 +237,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const SizedBox(height: 20),
 
-            // Uploaded Items (Navigate to UploadedItemsScreen)
             InkWell(
               onTap: () {
                 Navigator.push(
@@ -265,7 +261,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 40),
 
-            // Forgot Password
             ElevatedButton.icon(
               onPressed: _forgotPassword,
               icon: const Icon(Icons.lock_reset),
@@ -281,7 +276,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const SizedBox(height: 20),
 
-            // Logout Button
             ElevatedButton.icon(
               onPressed: _logout,
               icon: const Icon(Icons.logout),

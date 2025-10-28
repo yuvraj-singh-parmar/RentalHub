@@ -13,13 +13,11 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
-  // Controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool isLoading = false;
 
-  // Login Function
   Future<void> loginUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
@@ -115,7 +113,6 @@ class _MyLoginState extends State<MyLogin> {
                 ),
                 child: Column(
                   children: [
-                    // Email
                     TextField(
                       controller: emailController,
                       decoration: InputDecoration(
@@ -128,7 +125,7 @@ class _MyLoginState extends State<MyLogin> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    // Password
+
                     TextField(
                       controller: passwordController,
                       obscureText: true,
@@ -142,7 +139,7 @@ class _MyLoginState extends State<MyLogin> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    // Sign In Row
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -177,13 +174,13 @@ class _MyLoginState extends State<MyLogin> {
                       ],
                     ),
                     const SizedBox(height: 40),
-                    // Sign Up / Forgot Password Row
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, 'register');
+                            Navigator.pushNamed(context, '/register');
                           },
                           child: const Text(
                             'Sign Up',
@@ -215,7 +212,7 @@ class _MyLoginState extends State<MyLogin> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    // Check Button
+
                     ElevatedButton(
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
