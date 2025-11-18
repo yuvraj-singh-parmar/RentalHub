@@ -40,19 +40,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final resBody = jsonDecode(response.body);
 
       if (response.statusCode == 200 && resBody['status'] == 'success') {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(resBody['message'])));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(resBody['message'])));
+        if (!mounted) return;
         Navigator.pushReplacementNamed(context, '/login');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(resBody['message'] ?? 'Registration failed')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(resBody['message'] ?? 'Registration failed')),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      }
     } finally {
       setState(() => _isLoading = false);
     }
@@ -118,9 +120,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       prefixIcon: Icon(Icons.lock),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty)
+                      if (value == null || value.isEmpty) {
                         return 'Enter password';
-                      if (value.length < 6) return 'Password too short';
+                      }
+                      if (value.length < 6) {
+                        return 'Password too short';
+                      }
                       return null;
                     },
                   ),

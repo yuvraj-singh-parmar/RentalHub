@@ -40,14 +40,14 @@ class _MyLoginState extends State<MyLogin> {
         body: jsonEncode({"email": email, "password": password}),
       );
 
-      print('LOGIN: statusCode=${response.statusCode}');
-      print('LOGIN: rawBody=${response.body}');
+      debugPrint('LOGIN: statusCode=${response.statusCode}');
+      debugPrint('LOGIN: rawBody=${response.body}');
 
       Map<String, dynamic> responseData = {};
       try {
         responseData = jsonDecode(response.body) as Map<String, dynamic>;
       } catch (e) {
-        print('LOGIN: failed to parse JSON: $e');
+        debugPrint('LOGIN: failed to parse JSON: $e');
       }
 
       final backendStatus =
@@ -56,25 +56,24 @@ class _MyLoginState extends State<MyLogin> {
           responseData['message']?.toString() ?? 'Unknown error';
 
       if (response.statusCode == 200 && backendStatus == 'success') {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text("Login Successful!")));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login Successful!")));
         Future.delayed(const Duration(milliseconds: 200), () {
+          if (!mounted) return;
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
           );
         });
       } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(backendMessage)));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(backendMessage)));
       }
     } catch (e) {
-      print('LOGIN: exception: $e');
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Network error: $e")));
+      debugPrint('LOGIN: exception: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Network error: $e")));
+      }
     } finally {
       setState(() => isLoading = false);
     }
