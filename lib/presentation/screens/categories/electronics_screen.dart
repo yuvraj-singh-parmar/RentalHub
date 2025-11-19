@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loginsignup/data/local/global_data.dart';
 
 class MyElectronics extends StatefulWidget {
   const MyElectronics({super.key});
@@ -204,6 +205,16 @@ class _MyElectronicsState extends State<MyElectronics> {
                         "delivery": deliveryController.text,
                         "userUploaded": true,
                       });
+
+                      // Also add to global uploaded items so profile -> UploadedItemsScreen
+                      GlobalData.addItem({
+                        'title': titleController.text,
+                        'price': priceController.text,
+                        'location': 'Unknown',
+                        'image': File(_selectedImage!.path),
+                        'category': 'Electronics',
+                      });
+
                       _selectedImage = null;
                     });
 

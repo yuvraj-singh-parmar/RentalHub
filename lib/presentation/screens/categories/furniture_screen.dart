@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loginsignup/data/local/global_data.dart';
 
 class MyFurniture extends StatefulWidget {
   const MyFurniture({super.key});
@@ -204,6 +205,16 @@ class _MyFurnitureState extends State<MyFurniture> {
                         "delivery": deliveryController.text,
                         "userUploaded": true,
                       });
+
+                      // Add to global uploaded items so it appears in profile -> UploadedItemsScreen
+                      GlobalData.addItem({
+                        'title': titleController.text,
+                        'price': priceController.text,
+                        'location': 'Unknown',
+                        'image': File(_selectedImage!.path),
+                        'category': 'Furniture',
+                      });
+
                       _selectedImage = null;
                     });
 

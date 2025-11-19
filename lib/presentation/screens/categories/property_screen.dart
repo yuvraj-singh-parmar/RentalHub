@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loginsignup/data/local/global_data.dart';
 
 class MyProperty extends StatefulWidget {
   const MyProperty({super.key});
@@ -182,6 +183,16 @@ class _MyPropertyState extends State<MyProperty> {
                         "delivery": deliveryController.text,
                         "userUploaded": true,
                       });
+
+                      // Add to global uploaded items so it shows in profile uploads
+                      GlobalData.addItem({
+                        'title': titleController.text,
+                        'price': priceController.text,
+                        'location': 'Unknown',
+                        'image': File(_selectedImage!.path),
+                        'category': 'Property',
+                      });
+
                       _selectedImage = null;
                     });
 
